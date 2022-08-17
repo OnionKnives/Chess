@@ -10,7 +10,7 @@ enum class Team {
 enum class Type {
 	Pawn, Rook, Knight,
 	Bishop, Queen, King
-} type;
+};
 
 struct Piece_Initializer {
 	Team team;
@@ -26,7 +26,9 @@ public:
 	void die();
 	
 	Team getTeam();
+	Type getType();
 	SDL_Point getPosition();
+	bool checkIfMoved();
 
 	bool operator==(const Piece& p);
 	void move(SDL_Point);
@@ -41,10 +43,11 @@ private:
 
 	void validateMove();
 
+	bool alive;
 	bool hasMoved;
 	Team team;
 	Type type;
 	SDL_Point position;
 	SDL_Texture* sprite;
-	vector<SDL_Point> validMoves;
+	std::vector<SDL_Point> validMoves;
 };

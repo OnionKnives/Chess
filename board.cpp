@@ -32,13 +32,22 @@ void initializeBoard() {
 		}
 	}
 
+	Type types[3] = { Type::Rook, Type::Knight, Type::Bishop };
+
+	for (int col = 0; col < 3; ++col) {
+		board[col][0] = new Piece({ Team::Black, types[col], {col, 0} });
+		board[7 - col][0] = new Piece({ Team::Black, types[col], {7 - col, 0} });
+		board[col][7] = new Piece({ Team::White, types[col], {col, 7} });
+		board[7 - col][7] = new Piece({ Team::White, types[col], {7 - col, 7} });
+	}
+
 	// Pawns
 	for (int col = 0; col < 8; ++col) {
 		board[col][1] = new Piece({ Team::Black, Type::Pawn, {col, 1} });
 		board[col][6] = new Piece({ Team::White, Type::Pawn, {col, 6} });
 	}
 
-	// Rooks
+	/* Rooks
 	{
 		board[0][0] = new Piece({ Team::Black, Type::Rook, { 0, 0 } });
 		board[7][0] = new Piece({ Team::Black, Type::Rook, { 7, 0 } });
@@ -60,7 +69,7 @@ void initializeBoard() {
 		board[5][0] = new Piece({ Team::Black, Type::Bishop, { 5, 0} });
 		board[2][7] = new Piece({ Team::White, Type::Bishop, { 2, 7} });
 		board[5][7] = new Piece({ Team::White, Type::Bishop, { 5, 7} });
-	}
+	}*/
 
 	// Queens
 	{

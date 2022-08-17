@@ -28,7 +28,7 @@ void addValidMove(SDL_Point p) {
 }
 
 bool isEnemyPiece(Piece* p) {
-	return checkPieceTeam(p) != data.activePlayer;
+	return p->getTeam() != data.activePlayer;
 }
 
 bool cellInBounds(SDL_Point p) {
@@ -49,8 +49,8 @@ bool validateMove(SDL_Point p) {
 		addValidMove(p);
 		return true;
 	}
-	else if (checkPieceTeam(checkCell(p)) != data.activePlayer &&
-		checkPieceType(checkCell(p)) != Type::King) {
+	else if (checkCell(p)->getTeam() != data.activePlayer &&
+		checkCell(p)->getType() != Type::King) {
 		addValidMove(p);
 		return false; // Move is valid, but don't check beyond
 	}
@@ -74,15 +74,15 @@ bool validateMovePawn(SDL_Point p) {
 
 bool validatePawnAttack(SDL_Point p) {
 	if (checkCell(p) != nullptr &&
-		checkPieceTeam(checkCell(p)) != data.activePlayer &&
-		checkPieceType(checkCell(p)) != Type::King)
+		checkCell(p)->getTeam() != data.activePlayer &&
+		checkCell(p)->getType() != Type::King)
 		return true;
 	return false;
 }
 
 void pawnMoves() {
 	int direction;
-	SDL_Point point = checkPosition(data.activePiece);
+	SDL_Point point = data.activePiece->getPosition();
 
 	// Determine Move Direction
 	if (data.activePlayer == Team::White) direction = -1;
@@ -95,7 +95,7 @@ void pawnMoves() {
 		addValidMove(checkPoint);
 
 		checkPoint = { point.x, point.y + direction * 2 };
-		if (hasMoved(data.activePiece) == false &&
+		if (data.activePiece->checkIfMoved() == false &&
 			validateMovePawn(checkPoint))
 			addValidMove(checkPoint);
 	}
@@ -137,11 +137,11 @@ void checkStraightLines(SDL_Point origin) {
 }
 
 void rookMoves() {
-	checkStraightLines(checkPosition(data.activePiece));
+	checkStraightLines(data.activePiece->getPosition());
 }
 
 void knightMoves() {
-	SDL_Point origin = checkPosition(data.activePiece);
+	SDL_Point origin = data.activePiece->getPosition();
 
 	validateMove({ origin.x + 2, origin.y + 1 });
 	validateMove({ origin.x + 2, origin.y - 1 });
@@ -195,12 +195,12 @@ void checkDiagonalLines(SDL_Point origin) {
 }
 
 void bishopMoves() {
-	checkDiagonalLines(checkPosition(data.activePiece));
+	checkDiagonalLines(data.activePiece->getPosition());
 }
 
 void queenMoves() {
-	checkStraightLines(checkPosition(data.activePiece));
-	checkDiagonalLines(checkPosition(data.activePiece));
+	checkStraightLines(data.activePiece->getPosition());
+	checkDiagonalLines(data.activePiece->getPosition());
 }
 
 void checkCastle() {
@@ -208,7 +208,7 @@ void checkCastle() {
 }
 
 void kingMoves() {
-	SDL_Point origin = checkPosition(data.activePiece);
+	SDL_Point origin = data.activePiece->getPosition();
 
 	for (int i = -1; i < 2; ++i) {
 		for (int j = -1; j < 2; ++j) {
@@ -216,14 +216,14 @@ void kingMoves() {
 		}
 	}
 
-	if (hasMoved(data.activePiece) == false) {
+	if (data.activePiece->checkIfMoved() == false) {
 		checkCastle();
 	}
 }
 
 void calculateValidMoves() {
 	if (data.activePiece != nullptr) {
-		Type pieceType = checkPieceType(data.activePiece);
+		Type pieceType = data.activePiece->getType();
 
 		switch (pieceType) {
 		case Type::Pawn:
@@ -267,8 +267,8 @@ bool move(Piece* piece) {
 	// check if a piece is taken
 	// if pawn, check for promotion
 	// move piece
-	movePiece(piece, dest);
-	setHasMoved(piece);
+	//movePiece(piece, dest);
+	//setHasMoved(piece);
 
 	// add move to move stack, to be saved for replay
 
@@ -279,7 +279,7 @@ void update() {
 	if (data.activePiece == nullptr) {
 		if (mouseClick(SDL_BUTTON_LEFT) == MouseState::Down &&
 			checkIfMouseClickedOnCell() != nullptr) {
-			if (checkPieceTeam(checkIfMouseClickedOnCell()) == data.activePlayer) {
+			if (checkIfMouseClickedOnCell()->getTeam() == data.activePlayer) {
 				data.activePiece = checkIfMouseClickedOnCell();
 				calculateValidMoves();
 			}

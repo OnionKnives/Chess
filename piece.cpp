@@ -23,8 +23,16 @@ Team Piece::getTeam() {
 	return team;
 }
 
+Type Piece::getType() {
+	return type;
+}
+
 SDL_Point Piece::getPosition() {
 	return position;
+}
+
+bool Piece::checkIfMoved() {
+	return hasMoved;
 }
 
 bool Piece::operator==(const Piece& p) {
