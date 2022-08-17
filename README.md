@@ -1,3 +1,6 @@
+This currently doesn't work because at some point I decided to convert Piece from a procedural system to an object system. This has been widly regarded as a bad move and I deeply regret my actions. I'm working on making it work again.
+
+
 This is a very simple chess game that I wrote using SDL2 for rendering. At some point I'll finish this with AI, networked multiplayer, and all that, but for now this serves as a reasonable example of my coding ability.
 
 If you're interested in actually running the project, you'll need to follow the instruction on this page: https://www.strivix.com/learn-programming/learn-sdl/learn-sdl2
