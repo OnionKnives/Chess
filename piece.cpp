@@ -6,13 +6,15 @@
 
 using namespace std;
 
+extern SDL_Texture* getSprite(Type, Team);
+
 Piece::Piece(Piece_Initializer i) {
 	alive = true;
 	hasMoved = false;
 	team = i.team;
 	type = i.type;
 	position = i.position;
-	setSprite();
+	sprite = getSprite(type, team);
 }
 
 Piece::~Piece() {

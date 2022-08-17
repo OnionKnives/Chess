@@ -153,7 +153,6 @@ void renderPieces() {
 			Piece* piece = board[col][row];
 
 			if (piece != nullptr) {
-
 				SDL_Rect renderDest;
 				renderDest.w = blackSquare.w - 4;
 				renderDest.h = blackSquare.h - 4;

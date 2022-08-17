@@ -61,6 +61,7 @@ void render() {
 	SDL_RenderClear(getRenderer());
 
 	renderBoard();
+	renderPieces();
 
 	SDL_RenderPresent(getRenderer());
 }

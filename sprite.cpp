@@ -60,27 +60,28 @@ void initializeSprites() {
 	spriteLibrary.blackKing = loadTextureFromFile((FilePath + "king1.png").c_str());
 }
 
-void Piece::setSprite() {
+SDL_Texture* getSprite(Type type, Team team) {
 	switch (type) {
 	case Type::Pawn:
-		team == Team::White ? spriteLibrary.whitePawn : spriteLibrary.blackPawn;
+		return team == Team::White ? spriteLibrary.whitePawn : spriteLibrary.blackPawn;
 		break;
 	case Type::Rook:
-		team == Team::White ? spriteLibrary.whiteRook : spriteLibrary.blackRook;
+		return team == Team::White ? spriteLibrary.whiteRook : spriteLibrary.blackRook;
 		break;
 	case Type::Knight:
-		team == Team::White ? spriteLibrary.whiteKnight : spriteLibrary.blackKnight;
+		return team == Team::White ? spriteLibrary.whiteKnight : spriteLibrary.blackKnight;
 		break;
 	case Type::Bishop:
-		team == Team::White ? spriteLibrary.whiteBishop : spriteLibrary.blackBishop;
+		return team == Team::White ? spriteLibrary.whiteBishop : spriteLibrary.blackBishop;
 		break;
 	case Type::Queen:
-		team == Team::White ? spriteLibrary.whiteQueen : spriteLibrary.blackQueen;
+		return team == Team::White ? spriteLibrary.whiteQueen : spriteLibrary.blackQueen;
 		break;
 	case Type::King:
-		team == Team::White ? spriteLibrary.whiteKing : spriteLibrary.blackKing;
+		return team == Team::White ? spriteLibrary.whiteKing : spriteLibrary.blackKing;
 		break;
 	default:
+		SDL_Log("Unable to set sprite");
 		break;
 	}
 }
