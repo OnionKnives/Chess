@@ -62,6 +62,7 @@ void render() {
 
 	renderBoard();
 	renderPieces();
+	renderGhost();
 
 	SDL_RenderPresent(getRenderer());
 }

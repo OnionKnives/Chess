@@ -8,6 +8,7 @@ void initializeBoard();
 void renderValidMoveSquare(SDL_Point);
 void renderBoard();
 void renderPieces();
+void renderGhost();
 
 bool mouseInCell(SDL_Point);
 Piece* checkIfMouseClickedOnCell();

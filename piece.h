@@ -28,6 +28,7 @@ public:
 	Team getTeam();
 	Type getType();
 	SDL_Point getPosition();
+	SDL_Texture* getSprite();
 	bool checkIfMoved();
 
 	bool operator==(const Piece& p);
@@ -36,8 +37,6 @@ public:
 	void calculateValidMoves();
 
 private:
-	void setSprite();
-
 	void renderValidMoves();
 	void renderGhost();
 
@@ -45,6 +44,7 @@ private:
 
 	bool alive;
 	bool hasMoved;
+	bool isActive;
 	Team team;
 	Type type;
 	SDL_Point position;

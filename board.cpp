@@ -3,6 +3,7 @@
 #include "board.h"
 #include "input.h"
 #include "graphics.h"
+#include "game.h"
 
 Piece* board[8][8];
 std::vector<Piece*> whiteGraveyard;
@@ -32,44 +33,20 @@ void initializeBoard() {
 		}
 	}
 
-	Type types[3] = { Type::Rook, Type::Knight, Type::Bishop };
-
-	for (int col = 0; col < 3; ++col) {
-		board[col][0] = new Piece({ Team::Black, types[col], {col, 0} });
-		board[7 - col][0] = new Piece({ Team::Black, types[col], {7 - col, 0} });
-		board[col][7] = new Piece({ Team::White, types[col], {col, 7} });
-		board[7 - col][7] = new Piece({ Team::White, types[col], {7 - col, 7} });
-	}
-
 	// Pawns
 	for (int col = 0; col < 8; ++col) {
 		board[col][1] = new Piece({ Team::Black, Type::Pawn, {col, 1} });
 		board[col][6] = new Piece({ Team::White, Type::Pawn, {col, 6} });
 	}
 
-	/* Rooks
-	{
-		board[0][0] = new Piece({ Team::Black, Type::Rook, { 0, 0 } });
-		board[7][0] = new Piece({ Team::Black, Type::Rook, { 7, 0 } });
-		board[0][7] = new Piece({ Team::White, Type::Rook, { 0, 7 } });
-		board[7][7] = new Piece({ Team::White, Type::Rook, { 7, 7 } });
+	// Rooks, Knights, and Bishops
+	Type types[3] = { Type::Rook, Type::Knight, Type::Bishop };
+	for (int col = 0; col < 3; ++col) {
+		board[col][0] = new Piece({ Team::Black, types[col], {col, 0} });
+		board[7 - col][0] = new Piece({ Team::Black, types[col], {7 - col, 0} });
+		board[col][7] = new Piece({ Team::White, types[col], {col, 7} });
+		board[7 - col][7] = new Piece({ Team::White, types[col], {7 - col, 7} });
 	}
-
-	// Knights
-	{
-		board[1][0] = new Piece({ Team::Black, Type::Knight, { 1, 0} });
-		board[6][0] = new Piece({ Team::Black, Type::Knight, { 6, 0} });
-		board[1][7] = new Piece({ Team::White, Type::Knight, { 1, 7} });
-		board[6][7] = new Piece({ Team::White, Type::Knight, { 6, 7} });
-	}
-
-	// Bishops
-	{
-		board[2][0] = new Piece({ Team::Black, Type::Bishop, { 2, 0} });
-		board[5][0] = new Piece({ Team::Black, Type::Bishop, { 5, 0} });
-		board[2][7] = new Piece({ Team::White, Type::Bishop, { 2, 7} });
-		board[5][7] = new Piece({ Team::White, Type::Bishop, { 5, 7} });
-	}*/
 
 	// Queens
 	{
@@ -162,6 +139,25 @@ void renderPieces() {
 				piece->render(renderDest);
 			}
 		}
+	}
+}
+
+void renderGhost() {
+	if (activePiece() != nullptr) {
+		SDL_Point pos;
+		SDL_Rect dest;
+
+		mousePosition(&pos);
+		getCellSize(&dest);
+
+		dest.x = pos.x - (dest.w / 2);
+		dest.y = pos.y - (dest.h / 2);
+
+		SDL_RenderCopy(
+			getRenderer(),
+			activePiece()->getSprite(),
+			nullptr,
+			&dest);
 	}
 }
 

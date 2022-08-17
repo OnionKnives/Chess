@@ -60,7 +60,7 @@ void initializeSprites() {
 	spriteLibrary.blackKing = loadTextureFromFile((FilePath + "king1.png").c_str());
 }
 
-SDL_Texture* getSprite(Type type, Team team) {
+SDL_Texture* setSprite(Type type, Team team) {
 	switch (type) {
 	case Type::Pawn:
 		return team == Team::White ? spriteLibrary.whitePawn : spriteLibrary.blackPawn;

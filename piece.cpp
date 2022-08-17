@@ -6,7 +6,7 @@
 
 using namespace std;
 
-extern SDL_Texture* getSprite(Type, Team);
+extern SDL_Texture* setSprite(Type, Team);
 
 Piece::Piece(Piece_Initializer i) {
 	alive = true;
@@ -14,7 +14,7 @@ Piece::Piece(Piece_Initializer i) {
 	team = i.team;
 	type = i.type;
 	position = i.position;
-	sprite = getSprite(type, team);
+	sprite = setSprite(type, team);
 }
 
 Piece::~Piece() {
@@ -33,6 +33,10 @@ SDL_Point Piece::getPosition() {
 	return position;
 }
 
+SDL_Texture* Piece::getSprite() {
+	return sprite;
+}
+
 bool Piece::checkIfMoved() {
 	return hasMoved;
 }
@@ -44,30 +48,8 @@ bool Piece::operator==(const Piece& p) {
 void Piece::render(SDL_Rect dest) {
 	renderValidMoves();
 	SDL_RenderCopy(getRenderer(), sprite, nullptr, &dest);
-	renderGhost();
 }
 
 void Piece::renderValidMoves() {
 
-}
-
-void Piece::renderGhost() {
-	/*
-	if (activePiece() != nullptr) {
-		SDL_Point pos;
-		SDL_Rect dest;
-
-		mousePosition(&pos);
-		getCellSize(&dest);
-
-		dest.x = pos.x - (dest.w / 2);
-		dest.y = pos.y - (dest.h / 2);
-
-		SDL_RenderCopy(
-			getRenderer(),
-			getTexture(activePiece()),
-			nullptr,
-			&dest);
-	}
-	*/
 }
